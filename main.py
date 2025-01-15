@@ -33,19 +33,36 @@ def main():
         st.error("공고문을 PDF 파일로 업로드해주세요!")
         st.stop()
 
-    # 2) 모델(LLM) 선택 (module_d 예시, 혹은 utils.py에서 configure_llm() 사용)
+    # 2) 모델(LLM) 선택
     llm = module_d.select_llm_model()
     # 또는: llm = utils.configure_llm()
 
-    # 3) PDF → 로드 → 텍스트 분할
-    with st.spinner("Loading and splitting documents..."):
-        docs = module_a.load_pdfs(uploaded_files)
-        splits = module_a.split_documents(docs)
+    # 이미 생성된 문서/벡터스토어가 없거나, 업로드된 파일이 바뀐 경우에만 재생성
+    uploaded_file_names = [f.name for f in uploaded_files]
+    if (
+        "docs" not in st.session_state or
+        "splits" not in st.session_state or
+        "vectordb" not in st.session_state or
+        "uploaded_file_names" not in st.session_state or
+        st.session_state["uploaded_file_names"] != uploaded_file_names
+    ):
+        with st.spinner("Loading and splitting documents..."):
+            docs = module_a.load_pdfs(uploaded_files)
+            splits = module_a.split_documents(docs)
 
-    # 4) 임베딩/벡터 DB 생성
-    with st.spinner("Creating embeddings & vector store..."):
-        embedding_model = module_b.create_embedding_model()
-        vectordb = module_b.create_vectorstore(splits, embedding_model)
+        with st.spinner("Creating embeddings & vector store..."):
+            embedding_model = module_b.create_embedding_model()
+            vectordb = module_b.create_vectorstore(splits, embedding_model)
+
+        # 세션 상태에 저장하여 재사용
+        st.session_state["docs"] = docs
+        st.session_state["splits"] = splits
+        st.session_state["vectordb"] = vectordb
+        st.session_state["uploaded_file_names"] = uploaded_file_names
+    else:
+        docs = st.session_state["docs"]
+        splits = st.session_state["splits"]
+        vectordb = st.session_state["vectordb"]
 
     # 5) Retriever, Memory, Conversational Chain 구성
     retriever = module_c.create_retriever(vectordb, search_type='mmr', k=2, fetch_k=4)
@@ -55,7 +72,6 @@ def main():
     # 6) 사용자 Query
     user_query = st.chat_input(placeholder="무엇이든 질문해보세요!")
     if user_query:
-        # 사용자가 보낸 메시지 UI 출력
         utils.display_msg(user_query, 'user')
 
         # 7) LLM에 질문을 전달 → RAG 체인으로 답변 생성
