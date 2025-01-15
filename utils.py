@@ -78,24 +78,24 @@ def choose_custom_openai_key():
         st.stop()
     return model, openai_api_key
 
-def configure_llm():
-    available_llms = ["gpt-4o-mini","llama3.1:8b","llama3.2:3b","use your openai api key"]
-    llm_opt = st.sidebar.radio(
-        label="LLM",
-        options=available_llms,
-        key="SELECTED_LLM"
-        )
+# def configure_llm():
+#     available_llms = ["gpt-4o-mini","llama3.1:8b","llama3.2:3b","use your openai api key"]
+#     llm_opt = st.sidebar.radio(
+#         label="LLM",
+#         options=available_llms,
+#         key="SELECTED_LLM"
+#         )
 
-    if llm_opt == "llama3.1:8b":
-        llm = ChatOllama(model="llama3.1", base_url=st.secrets["OLLAMA_ENDPOINT"])
-    elif llm_opt == "llama3.2:3b":
-        llm = ChatOllama(model="llama3.2", base_url=st.secrets["OLLAMA_ENDPOINT"])
-    elif llm_opt == "gpt-4o-mini":
-        llm = ChatOpenAI(model_name=llm_opt, temperature=0, streaming=True, api_key=st.secrets["OPENAI_API_KEY"])
-    else:
-        model, openai_api_key = choose_custom_openai_key()
-        llm = ChatOpenAI(model_name=model, temperature=0, streaming=True, api_key=openai_api_key)
-    return llm
+#     if llm_opt == "llama3.1:8b":
+#         llm = ChatOllama(model="llama3.1", base_url=st.secrets["OLLAMA_ENDPOINT"])
+#     elif llm_opt == "llama3.2:3b":
+#         llm = ChatOllama(model="llama3.2", base_url=st.secrets["OLLAMA_ENDPOINT"])
+#     elif llm_opt == "gpt-4o-mini":
+#         llm = ChatOpenAI(model_name=llm_opt, temperature=0, streaming=True, api_key=st.secrets["OPENAI_API_KEY"])
+#     else:
+#         model, openai_api_key = choose_custom_openai_key()
+#         llm = ChatOpenAI(model_name=model, temperature=0, streaming=True, api_key=openai_api_key)
+#     return llm
 
 def print_qa(cls, question, answer):
     log_str = "\nUsecase: {}\nQuestion: {}\nAnswer: {}\n" + "------"*10
