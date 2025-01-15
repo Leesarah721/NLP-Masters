@@ -3,7 +3,7 @@
 # 1. 프로젝트 소개
 
 <aside>
-** ### 프로젝트 주제: 청약 관련 문서 요약 및 질의응답 챗봇**
+ ### **프로젝트 주제: 청약 관련 문서 요약 및 질의응답 챗봇**
 
 - **목표**: PDF 문서를 요약하고, 해당 문서를 바탕으로 사용자의 질문에 답변하는 챗봇 개발.
 - **기술**: LangChain을 활용하여 텍스트 분석 및 요약.
@@ -18,11 +18,13 @@
 
 ## 1-1. RAG 소개
 
-![image.png](image.png)
+![image](https://github.com/user-attachments/assets/b00a4ea5-42bf-4967-b4d8-e983c43cfe3a)
+
 
 ## **1-2. 순서도**
 
-![순서도.png](%25EC%2588%259C%25EC%2584%259C%25EB%258F%2584.png)
+![%EC%88%9C%EC%84%9C%EB%8F%84](https://github.com/user-attachments/assets/d85c490e-40de-4be2-9224-564fb9e4657a)
+
 
 ## **1-3.** 역할분담
 
@@ -68,8 +70,8 @@
 # 2. 프로젝트 개발내용
 
 ## 2-1.  PDF 파일 로더
+![image](https://github.com/user-attachments/assets/b00a4ea5-42bf-4967-b4d8-e983c43cfe3a)
 
-![image.png](image%201.png)
 
 **✅ 청약 공고문에서 PDF 파일 로더의 중요성**
 
