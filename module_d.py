@@ -31,6 +31,9 @@ def select_llm_model():
         index=0
     )
     # 예: 실제 오라클, 구글, 메타 등 모델은 따로 API 수정이 필요
+    """
+        gpt, gemini만 추가
+    """
     if model_option in ['gpt-3.5-turbo']:
         llm = ChatOpenAI(model_name=model_option,temperature=0)
     elif model_option in ['gemini']:
