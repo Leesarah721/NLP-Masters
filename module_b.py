@@ -2,15 +2,13 @@
 
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
 # 필요한 경우, BM25 또는 기타 Retriever 라이브러리 import
 # from rank_bm25 import BM25Okapi  # 예시
 
 def create_embedding_model():
     """OpenAI 또는 FastEmbedEmbeddings 등을 초기화."""
     # 예: OpenAIEmbeddings()
-    # return OpenAIEmbeddings()
-    return GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    return OpenAIEmbeddings()
 
 def create_vectorstore(splits, embedding_model):
     """분할된 문서(splits)를 FAISS 벡터스토어에 저장하고 반환한다."""
