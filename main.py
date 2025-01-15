@@ -48,9 +48,9 @@ def main():
         vectordb = module_b.create_vectorstore(splits, embedding_model)
 
     # 5) Retriever, Memory, Conversational Chain 구성
-    retriever = module_c.create_retriever(vectordb, search_type='mmr', k=2, fetch_k=4)
-    memory = module_c.create_memory()
-    qa_chain = module_c.create_conversational_chain(llm, retriever, memory, verbose=False)
+    # retriever = module_c.create_retriever(vectordb, search_type='mmr', k=2, fetch_k=4)
+    # memory = module_c.create_memory()
+    # qa_chain = module_c.create_conversational_chain(llm, retriever, memory, verbose=False)
 
     # 6) 사용자 Query
     user_query = st.chat_input(placeholder="무엇이든 질문해보세요!")
@@ -60,6 +60,10 @@ def main():
 
         # 7) LLM에 질문을 전달 → RAG 체인으로 답변 생성
         with st.chat_message("assistant"):
+            dense_retriever, sparse_retriever = module_c.create_retriever(vectordb,'similarity', 3, 4,splits)
+            memory = module_c.create_memory()
+            qa_chain = module_c.create_conversational_chain(llm, dense_retriever, sparse_retriever, memory, False, user_query)
+
             st_cb = StreamHandler(st.empty())  # 스트리밍 콜백
             result_answer, source_docs = module_d.generate_answer(qa_chain, user_query)
 
