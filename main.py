@@ -76,6 +76,8 @@ def main():
 
         # 7) LLM에 질문을 전달 → RAG 체인으로 답변 생성
         with st.chat_message("assistant"):
+            
+            # 5) Retriever, Memory, Conversational Chain 구성
             dense_retriever, sparse_retriever = module_c.create_retriever(vectordb,'similarity', 3, 4,splits)
             memory = module_c.create_memory()
             qa_chain = module_c.create_conversational_chain(llm, dense_retriever, sparse_retriever, memory, False, user_query)

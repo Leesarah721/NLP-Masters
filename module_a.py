@@ -24,8 +24,10 @@ def load_pdfs(uploaded_files):
 
 def split_documents(docs, chunk_size=1000, chunk_overlap=200):
     """문서 리스트를 chunk_size, chunk_overlap에 맞춰 분할."""
+    splits_text = ["■","▣"]
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap
+        chunk_overlap=chunk_overlap,
+        separators=splits_text
     )
     return text_splitter.split_documents(docs)
