@@ -17,14 +17,17 @@
 - 청약에 관한 복잡한 문서, 약관, 정책 설명서 등을 요약하여 빠르게 이해할 수 있도록 지원합니다
 </aside>
 
+
 ## 1-1. RAG 소개
 
 ![image](https://github.com/user-attachments/assets/b00a4ea5-42bf-4967-b4d8-e983c43cfe3a)
 
 
+
 ## **1-2. 순서도**
 
 ![%EC%88%9C%EC%84%9C%EB%8F%84](https://github.com/user-attachments/assets/d85c490e-40de-4be2-9224-564fb9e4657a)
+
 
 
 ## **1-3.** 역할분담
@@ -56,17 +59,20 @@
 - **Answer**: LLM 결과를 적합한 형태로 가공하고 추가 질문 처리.
 </aside>
 
+
 ## **1-4. 사용툴**
 
 <aside>
-💡
 
 - **백엔드** : python 3.10
 - **프론트엔드** : Streamlit
 - **버전 관리** : Git
 - **프레임워크** : Langchain
 - **IDE** : Visual Studio Code
+- 
 </aside>
+
+
 
 # 2. 프로젝트 개발내용
 
@@ -90,7 +96,8 @@
     
 
 **✅ 사용한 로더:  `PyMuPDFLoader`**
-`pdfplumber`가 가장 높은 정확도를 보였지만 속도가 느리다는 점을 발견했으며, **`PyMuPDFLoader`**가 속도와 정확도 면에서 모두 적합하다고 판단했습니다.
+-**`pdfplumber`**가 가장 높은 정확도를 보였지만 속도가 느리다는 점을 발견했으며, 
+**`PyMuPDFLoader`**가 속도와 정확도 면에서 모두 적합하다고 판단하여 사용하게 됨
 
 ## 2-2.  텍스트 전처리
 
@@ -172,8 +179,8 @@ Splitter | 고정 크기 | 균일한 크기로
     - 기존 OpenAI 임베딩 모델에서 `jhgan/ko-sbert-nli`로 교체하여, 한국어에 최적화된 경량화 모델 사용.
 
 **<CPU vs GPU성능 비교>**
+![image 2](https://github.com/user-attachments/assets/ed1ce704-552c-45ed-abc8-6792566dc48a)
 
-![image.png](image%202.png)
 
 1. CUDA 사용 1: GPU 기본 설정 사용
 2. CUDA 사용 2: Batch_size 최적화, 임베딩 정규화
@@ -192,14 +199,16 @@ Fine-tuning된 모델 |
 
 **`nlpai-lab/KoE5`  vs `jhgan/ko-sbert-nli`
 <임베딩 모델 `nlpai-lab/KoE5`  vs `jhgan/ko-sbert-nli` 성능 비교>**
+![image 3](https://github.com/user-attachments/assets/fca1894a-cd54-4cbb-a963-28287743c6f3)
 
-![image.png](image%203.png)
+
 
 **⇒ 경량화 모델(`jhgan/ko-sbert-nli`)로 전환하여 GPU 사용 필요성을 줄이고 CPU 기반 효율성 확보.**
 
 **<`jhgan/ko-sbert-nli` 모델로 로드 유형만 변경 시 성능 비교>**
 
-![image.png](image%204.png)
+![image 4](https://github.com/user-attachments/assets/f68d71a8-51da-4165-a066-1b343edb50f6)
+
 
 **⇒ 결론**
 
@@ -212,9 +221,8 @@ Fine-tuning된 모델 |
 ### ****🔺**`Vectorstore` 를 사용하는 이유**?
 
 <aside>
-💡
 
- 텍스트 데이터를 벡터화하여 고차원 공간에 임베딩합니다. 
+텍스트 데이터를 벡터화하여 고차원 공간에 임베딩합니다. 
 이를 통해 단어의 의미를 수학적으로 표현할 수 있으며, 
 벡터 공간 내에서 **유사도 기반 검색**을 할 수 있게 합니다!
 
@@ -239,7 +247,6 @@ Fine-tuning된 모델 |
 ### ****🔺 **Retriever?**
 
 <aside>
-💡
 
 Retriever는 질문을 이해하고 관련 문서를 찾는 역할을 하며, 
 
@@ -260,8 +267,8 @@ Retriever의 정확성과 속도가 RAG 시스템의 성능을 크게 좌우합�
 
 💡 하나의 질의(Query)를 다양한 방식으로 변형하여 
  여러 개의 질의를 생성하고, 이를 통해 검색 또는 정보 추출 성능을 향상시키는 방법
+![image 5](https://github.com/user-attachments/assets/94db1b69-edc9-4e90-a199-4f3f4293a587)
 
-![image.png](image%205.png)
 
 **🔹기대효과:** 
 
@@ -280,8 +287,8 @@ Retriever의 정확성과 속도가 RAG 시스템의 성능을 크게 좌우합�
 ### **✅ Ensemble Retriver**
 
 💡 **두 가지 이상의 검색 방법**을 결합하여 **검색 성능을 향상**시키는 기법입니다. 이 코드에서는 **Dense Retriever**와 **Sparse Retriever**를 결합하여 앙상블 검색기를 구현하고 있습니다.
+![image 6](https://github.com/user-attachments/assets/71f034e9-0b9b-48a6-bc6e-5dc8d692c214)
 
-![image.png](image%206.png)
 
 - **`dense_retriever` (밀집 검색기)**:
     - **FAISS** **벡터 기반** 검색 방식을 사용하는 **Dense Retriever**는 **밀집 벡터**를 기반으로 한 검색기입니다. 주로 **Embedding 모델**을 사용하여 텍스트를 벡터로 변환하고, 이 벡터들을 이용하여 검색합니다.
@@ -388,3 +395,23 @@ Retriever의 정확성과 속도가 RAG 시스템의 성능을 크게 좌우합�
 ### **보안할 점**
 
 - **검색 정확도 보완**: 비슷한 질문을 했을 때에도 더 정확한 답변을 제공하도록 보안 필요.
+
+# 4. 실행방법
+
+
+-  **Chat with Websites** \
+  Enable the chatbot to interact with website contents.
+
+## <img src="https://streamlit.io/images/brand/streamlit-mark-color.png" width="40" height="22"> Streamlit App
+Created a multi-page streamlit app containing all sample chatbot use cases. \
+You can access this app through this link: [langchain-chatbot.streamlit.app](https://langchain-chatbot.streamlit.app)
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://langchain-chatbot.streamlit.app/)
+
+
+## 🖥️ Running locally
+```shell
+# Run main streamlit app
+streamlit run Home.py
+```
+
