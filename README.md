@@ -398,10 +398,6 @@ Retriever의 정확성과 속도가 RAG 시스템의 성능을 크게 좌우합�
 
 # 4. 실행방법
 
-
--  **Chat with Websites** \
-  Enable the chatbot to interact with website contents.
-
 ## <img src="https://streamlit.io/images/brand/streamlit-mark-color.png" width="40" height="22"> Streamlit App
 Created a multi-page streamlit app containing all sample chatbot use cases. \
 You can access this app through this link: [langchain-chatbot.streamlit.app](https://langchain-chatbot.streamlit.app)
