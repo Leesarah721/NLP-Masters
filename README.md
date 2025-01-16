@@ -77,7 +77,7 @@
 # 2. 프로젝트 개발내용
 
 ## 2-1.  PDF 파일 로더
-![image](https://github.com/user-attachments/assets/b00a4ea5-42bf-4967-b4d8-e983c43cfe3a)
+![image 1](https://github.com/user-attachments/assets/793b237e-e55e-4564-a47e-a37237bf00c7)
 
 
 **✅ 청약 공고문에서 PDF 파일 로더의 중요성**
